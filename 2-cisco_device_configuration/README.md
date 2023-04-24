@@ -54,6 +54,18 @@ reload
 
 
 
+# delete configs
+erase startup-config
+reload
+show flash
+delete vlan.dat
+show flash
+reload
+
+
+
+
+
 show  running-config
 do show run
 show flash
@@ -104,6 +116,35 @@ ip domain-name test
 crypto key generate rsa
 line vty 0 2
 transport input ssh
+
+
+# how to run dhcp on a multi-layer switch
+
+ip dhcp pool <name>
+network 192.168.2.0 255.255.255.0
+default-router 192.168.2.1
+dns-server 8.8.8.8
+exit
+ip dhcp exclude-address 192.168.2.1 192.168.2.30
+
+
+
+
+
+
+
+# Inter Vlan routing: 
+-1) use a router (ROAS --> router on a stick)
+-2) use a multi-layer switch
+
+
+int gig 0/0/0.10
+encapsulation dot1Q 10 
+ip address 192.168.10.1 255.255.255.0
+exit
+int gig 0/0/0.11
+encapsulation dot1Q 11 
+ip address 192.168.11.1 255.255.255.0
 
 
 
