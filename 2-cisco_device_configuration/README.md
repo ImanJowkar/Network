@@ -172,7 +172,7 @@ ip routing
 # Routing Protocols
 
 ### Static Route
-![Static Route](./image/static-route.png)
+![Static Route](./image/static-route.PNG)
 ```
 ip route destiation_IP sub_mask forward
 ip route 172.16.12.0 255.255.255.0 5.6.2.1
