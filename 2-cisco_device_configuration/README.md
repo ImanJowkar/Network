@@ -1,7 +1,7 @@
 # Network 
 
 
-## How to config cisco devices
+## common configuration of cisco devices:
 
 ![Cisco device modes](./image/1.png)
 ```
@@ -98,11 +98,6 @@ no switchport
 ip addr 192.168.1.1 255.255.255.0
 
 
-# how to enable dhcp on cisco router
-ip dhcp pool pool-name
-network 192.168.1.0 255.255.255.0
-default-router 192.168.1.1
-
 
 # how to enable telnet: 
 username admin privilege 15 secret admin
@@ -118,8 +113,19 @@ line vty 0 2
 transport input ssh
 
 
-# how to run dhcp on a multi-layer switch
 
+```
+
+## Enable dhcp on Cisco switchs and routers 
+```
+# how to enable dhcp on cisco router
+ip dhcp pool pool-name
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+
+
+# ============================
+# how to run dhcp on a multi-layer switch
 ip dhcp pool <name>
 network 192.168.2.0 255.255.255.0
 default-router 192.168.2.1
@@ -128,16 +134,24 @@ exit
 ip dhcp exclude-address 192.168.2.1 192.168.2.30
 
 
+# ==========================
+# How to setup a dhcp server that doesn't run on a switch or router
 
+interface vlan 2
+ip addr 192.168.2.1 255.255.255.0
+ip helper-address 192.168.4.10
+
+```
 
 
 
 
 # Inter Vlan routing: 
--1) use a router (ROAS --> router on a stick)
--2) use a multi-layer switch
+*  use a router (ROAS --> router on a stick)
+*  use a multi-layer switch
 
-
+```
+# use a router (ROAS --> router on a stick)
 int gig 0/0/0.10
 encapsulation dot1Q 10 
 ip address 192.168.10.1 255.255.255.0
@@ -147,13 +161,21 @@ encapsulation dot1Q 11
 ip address 192.168.11.1 255.255.255.0
 
 
+# use a multi-layer switch
+interface vlan 2
+ip addr 192.168.2.1 255.255.255.0
+ip routing
 
 
 
+```
+# Routing Protocols
 
-
-
-
+### Static Route
+![Static Route](./image/static-route.png)
+```
+ip route destiation_IP sub_mask forward
+ip route 172.16.12.0 255.255.255.0 5.6.2.1
 
 
 
