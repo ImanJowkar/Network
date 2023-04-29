@@ -134,6 +134,14 @@ exit
 ip dhcp exclude-address 192.168.2.1 192.168.2.30
 
 
+interface vlan 2
+ip addr 192.168.2.1 255.255.255.0
+
+
+
+
+
+
 # ==========================
 # How to setup a dhcp server that doesn't run on a switch or router
 
