@@ -13,3 +13,9 @@
 ![Cisco device modes](./img/6.jpg)
 
 ![Cisco device modes](./img/7.jpg)
+
+![Cisco device modes](./img/8.jpg)
+![Cisco device modes](./img/9.jpg)
+![Cisco device modes](./img/10.jpg)
+![Cisco device modes](./img/11.jpg)
+![Cisco device modes](./img/12.jpg)
