@@ -110,6 +110,15 @@ do show run
 show flash
 ```
 
+# inspect the detail of a switch status
+```
+do show int fa0/1 switchport
+```
+
+
+
+
+
 
 # how to set IP address on router ports
 
@@ -118,6 +127,7 @@ show flash
 interface gigabitEthernet 0/0/0
 ip address 192.168.1.1 255.255.255.0
 no sh
+do show ip int bri
 do show run
 
 ```
@@ -171,6 +181,10 @@ ip domain-name test
 crypto key generate rsa
 line vty 0 2
 transport input ssh
+
+
+# for show publickey
+do show crypto key mypubkey rse
 ```
 
 
@@ -183,7 +197,21 @@ transport input ssh
 ip dhcp pool pool-name
 network 192.168.1.0 255.255.255.0
 default-router 192.168.1.1
+dns-server 192.168.1.1
 
+
+exit
+
+ip dhcp excluded-address 192.168.1.1 192.168.1.10
+
+
+
+# for showing which IP assgin to client
+do show ip dhcp binding
+do show ip dhcp pool
+
+# for seeing the ip confilict in dhcp
+do show ip dhcp confilict
 ```
 
 # how to run dhcp on a multi-layer switch
@@ -212,6 +240,11 @@ switchport access vlan 10
 
 int range fa 0/3-4
 switchport access vlan 20
+
+
+
+# choosing multiple range
+int range fa 0/1-3 , fa 0/5
 
 ```
 
