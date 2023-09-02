@@ -225,6 +225,38 @@ exit
 ip dhcp exclude-address 192.168.2.1 192.168.2.30
 ```
 
+# Port Security
+```
+show int fa 0/1
+conf t
+int fa 0/1
+switchport mode access
+switchport port-security
+
+do show port-security
+do show port-security int fa 0/1
+
+
+# change the maximum default device
+switchport port-security maximum 3
+
+
+switchport port-security violation restrict
+
+
+
+
+# clear port-security
+do clear port-security all
+
+
+
+```
+
+
+
+
+
 # vlan
 
 ```
