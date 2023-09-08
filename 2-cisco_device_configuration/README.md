@@ -290,3 +290,16 @@ int range fa 0/1-3 , fa 0/5
 no vlan 10
 
 ```
+
+
+
+# set ip on layer2 switches 
+```
+int vlan1 
+ip add 192.168.1.1 255.255.255.0
+no sh
+exit
+ip default-gateway 192.168.1.254
+
+
+```
