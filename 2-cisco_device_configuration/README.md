@@ -398,7 +398,7 @@ Here are some key points about VTP in Cisco switches:
 
 It's important to configure VTP carefully to avoid unintended changes in VLAN configurations. Also, be aware that VTP is a Cisco-proprietary protocol, so it typically only works with Cisco switches and not with switches from other manufacturers.
 
-
+`vtp only send vtp data, when interfaces which connected between switches are in trunk mode.`
 ```
 
 # on vtp server
@@ -438,3 +438,5 @@ copy running-config startup-config
 
 
 ```
+
+## ROAS(Router On A Stick)
