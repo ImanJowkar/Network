@@ -420,9 +420,21 @@ vtp password iman
 
 ## Switchport protected
 
+When switchport protected is enabled on an interface, the switch will only forward traffic to that interface from other interfaces that are not configured as protected ports. All traffic between protected ports must be forwarded through a Layer 3 device, such as a router.
+
+Here are some of the benefits of using switchport protected:
+
+- `Improved security:` By preventing traffic from being forwarded between protected ports, you can make it more difficult for unauthorized devices to access your network.
+- `Reduced broadcast traffic:` Broadcast traffic can significantly impact network performance. By configuring protected ports, you can reduce the amount of broadcast traffic on your network.
+- `Network segmentation:` You can use switchport protected to segment your network into different security zones. For example, you could configure protected ports on all ports connected to a guest network to isolate it from the rest of the network.
+
 ```
-int fa 0/1
+enable
+configure terminal
+interface GigabitEthernet0/1
 switchport protected
+end
+copy running-config startup-config
 
 
 ```
