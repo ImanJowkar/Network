@@ -474,3 +474,4 @@ encapsulation dot1Q 4
 ip add 192.168.4.1 255.255.255.0
 
 ```
+
