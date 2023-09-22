@@ -228,29 +228,45 @@ ip dhcp exclude-address 192.168.2.1 192.168.2.30
 ![port-security](./image/port-security.PNG)
 ```
 show int fa 0/1
-conf t
+conf t  
 int fa 0/1
 switchport mode access
 switchport port-security
+switchport port-security mac-address 0003.E43B.0960
 
 do show port-security
-do show port-security int fa 0/1
+show port-security address
+show port-security interface FastEthernet 0/1
 
 
 # change the maximum default device
 switchport port-security maximum 3
 
 
+
+switchport port-security violation shutdown
 switchport port-security violation restrict
+switchport port-security violation protect
 
 
 
 
 # clear port-security
+do clear port-security configured
 do clear port-security all
 
 
 
+```
+
+
+# Enable syslog sever
+```
+# syslog protocols works on 514/udp
+logging on # enable syslog on device
+logging 192.168.168.52
+
+show logging
 ```
 
 
@@ -440,3 +456,21 @@ copy running-config startup-config
 ```
 
 ## ROAS(Router On A Stick)
+```
+hostname r1
+int gig 0/0/0
+no sh
+exit
+interface gigabitEthernet 0/0/0.2
+encapsulation dot1Q 2
+ip add 192.168.2.1 255.255.255.0
+
+interface gigabitEthernet 0/0/0.3
+encapsulation dot1Q 3
+ip add 192.168.3.1 255.255.255.0
+
+interface gigabitEthernet 0/0/0.4
+encapsulation dot1Q 4
+ip add 192.168.4.1 255.255.255.0
+
+```
