@@ -89,6 +89,8 @@ ip route 192.168.51.0 255.255.255.0 5.6.4.9
 
 ```
 
+# Standard ACL
+
 ### block 192.168.1.10 trafik to servers, and allow 10.10.10.11 to servers
 ```
 # on R2
@@ -128,3 +130,27 @@ interface gigabitEthernet 0/0/0
 ip access-group 2 in
 
 ```
+
+
+# Standard ACL Second Way
+#### Block range 192.168.1.0/24
+```
+# R2
+ip access-list standard test
+remark this access list is used for block trafik
+deny 192.168.1.0 0.0.0.255
+permit 192.168.50.0 0.0.0.255
+permit 192.168.51.0 0.0.0.255
+permit 10.10.10.0 0.0.0.255
+
+interface gigabitEthernet 0/0/1
+ip access-group test out
+
+
+# add rule with hiegher priority
+5 permit any
+
+```
+
+
+# Extended ACL
