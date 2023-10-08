@@ -154,3 +154,54 @@ ip access-group test out
 
 
 # Extended ACL
+
+#### Block range(192.168.1.0/24) to DNS server
+
+```
+# R2
+access-list 100 deny ip 192.168.1.0 0.0.0.255 host 172.16.24.10
+access-list 100 permit ip any any
+do sh ac
+
+interface gigabitEthernet 0/0/1
+ip access-group 100 out
+
+
+```
+
+#### Block icmp
+
+```
+# R2
+access-list 101 deny icmp any 172.16.24.0 0.0.0.255
+access-list 101 permit ip any any
+do sh ac
+
+interface gigabitEthernet 0/0/1
+ip access-group 101 out
+
+
+```
+
+
+### Permit src any, dest any but only on port 443
+```
+# R2
+access-list 101 deny icmp any 172.16.24.0 0.0.0.255 
+access-list 101 permit tcp any 172.16.24.0 0.0.0.255 eq 443
+
+
+```
+
+# permit admin access for telnet and ssh
+```
+# R2
+ip access-list standard deny-ssh
+permit host 192.168.1.10
+
+line vty 0 1
+access-class deny-ssh in
+
+```
+
+
