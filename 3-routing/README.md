@@ -27,4 +27,4 @@ Here are some key points to understand about routing:
 
 7. **Routing Security:** Ensuring the security of routing information is critical to prevent issues like route hijacking and BGP attacks. Various mechanisms and protocols, such as BGPSEC and RPKI, aim to enhance routing security.
 
-Routing is a complex topic with many nuances, and it's crucial for the proper functioning of networks. If you have specific questions or want to delve deeper into any aspect of routing, feel free to ask!
+Routing is a complex topic with many nuances, and it's crucial for the proper functioning of networks.
