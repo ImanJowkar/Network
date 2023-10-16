@@ -306,7 +306,13 @@ int range fa 0/1-3 , fa 0/5
 no vlan 10
 
 ```
+## Disable Debug log on console
 
+```
+
+no debug all
+
+```
 
 
 # set ip on layer2 switches 
