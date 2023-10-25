@@ -31,6 +31,7 @@ switchport mode trunk
 switchport trunk allowed vlan 15
 switchport trunk allowed vlan add 16
 switchport trunk allowed vlan add 17
+switchport trunk allowed vlan add 1
 
 
 
@@ -61,6 +62,7 @@ switchport mode trunk
 switchport trunk allowed vlan 15
 switchport trunk allowed vlan add 16
 switchport trunk allowed vlan add 17
+switchport trunk allowed vlan add 1
 exit
 
 
@@ -69,6 +71,7 @@ switchport mode trunk
 switchport trunk allowed vlan 15
 switchport trunk allowed vlan add 16
 switchport trunk allowed vlan add 17
+switchport trunk allowed vlan add 1
 
 ```
 
@@ -97,12 +100,13 @@ switchport mode trunk
 switchport trunk allowed vlan 15
 switchport trunk allowed vlan add 16
 switchport trunk allowed vlan add 17
+switchport trunk allowed vlan add 1
 exit
 
 
 ```
 
-# hostname R1-local
+# R1-local
 ```
 hostname R1-local
 interface gigabitEthernet 0/0/0
@@ -126,21 +130,30 @@ ip address 192.168.17.1 255.255.255.0
 exit
 
 
+interface gigabitEthernet 0/0/0.1
+encapsulation dot1Q 1
+ip address 192.168.1.1 255.255.255.0
+exit
+
+
 ip dhcp pool vlan15
 network 192.168.15.0 255.255.255.0
 default-router 192.168.15.1
+dns-server 8.8.8.8
 exit
 
 
 ip dhcp pool vlan17
 network 192.168.17.0 255.255.255.0
 default-router 192.168.17.1
+dns-server 8.8.8.8
 exit
 
 
 ip dhcp pool vlan16
 network 192.168.16.0 255.255.255.0
 default-router 192.168.16.1
+dns-server 8.8.8.8
 exit
 
 
@@ -157,6 +170,78 @@ exit
 
 
 ip route 0.0.0.0 0.0.0.0 7.7.7.1
+
+
+
+
+# NAT configuration
+
+
+interface range gigabitEthernet 0/0/0.15
+ip nat inside
+
+interface range gigabitEthernet 0/0/0.16
+ip nat inside
+
+interface range gigabitEthernet 0/0/0.17
+ip nat inside
+
+interface range gigabitEthernet 0/0/0.1
+ip nat inside
+
+interface gigabitEthernet 0/0/1
+ip nat outside
+
+# one ip
+ip nat inside source static 192.168.16.22 7.7.7.2
+ip nat inside source static 192.168.15.22 7.7.7.3
+
+
+
+# PAT configuration
+
+interface range gigabitEthernet 0/0/0.15
+ip nat inside
+
+interface range gigabitEthernet 0/0/0.16
+ip nat inside
+
+interface range gigabitEthernet 0/0/0.17
+ip nat inside
+
+interface gigabitEthernet 0/0/1
+ip nat outside
+
+
+
+ip access-list standard vlan15
+permit 192.168.15.0 0.0.0.255
+exit
+
+ip nat inside source list vlan15 interface gigabitEthernet 0/0/1
+
+ip access-list standard vlan17
+permit 192.168.17.0 0.0.0.255
+exit
+ip nat inside source list vlan17 interface gigabitEthernet 0/0/1
+
+
+ip access-list standard vlan16
+permit 192.168.16.0 0.0.0.255
+exit
+ip nat inside source list vlan16 interface gigabitEthernet 0/0/1
+
+ip nat inside source static 192.168.1.10 7.7.7.10
+
+
+
+
+# Port forwarding
+ip nat inside source static tcp 192.168.1.10 80 7.7.7.10 8090
+
+
+
+
 ```
 
 
