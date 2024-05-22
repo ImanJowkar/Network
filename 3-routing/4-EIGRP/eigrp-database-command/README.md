@@ -29,4 +29,16 @@ passive-interface
 
 
 
+
+
+
+
+```
+
+# monitoring
+```
+sh ip eigrp interfaces detail
+sh ip eigrp interfaces detail serial 5/1
+
+
 ```
