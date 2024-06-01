@@ -39,6 +39,10 @@ passive-interface
 ```
 sh ip eigrp interfaces detail
 sh ip eigrp interfaces detail serial 5/1
+sh ip eigrp topology all-links
+
+
+
 
 
 ```
