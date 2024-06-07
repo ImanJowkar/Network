@@ -1,35 +1,87 @@
 
 ![img](img/1.png)
 
-# DHCP
+
+
+### Ubuntu as a dhcp server
 ```
-
-ipv6 dhcp pool vlan-20
-address prefix 2001:1:20::/64
-dns-server 2001:1:20::1
-domain-name iman.local
-
-
-ipv6 dhcp pool vlan-30
-address prefix 2001:1:30::/64
-dns-server 2001:1:20::1
-domain-name iman.local
-
-
-ipv6 dhcp pool vlan-40
-address prefix 2001:1:40::/64
-dns-server 2001:1:20::1
-domain-name iman.local
-
-interface fast 0/0
-ipv6 addr 2001:1:50::2/64
-no sh
+# add below config to /etc/netplan/config.yaml
+######
+network:
+  version: 2
+  ethernets:
+    ens3:
+      dhcp4: no
+      dhcp6: no
+      addresses:
+        - "2001:1:50::2/64"
+#####
 
 
-sh ipv6 dhcp pool
-sh ipv6 dhcp binding
 
-ipv6 dhcp server
+
+
+
+
+
+
+
+sudo apt update
+sudo apt install isc-dhcp-server
+
+
+
+vim  /etc/dhcp/dhcpd6.conf
+# add below config to this file
+#####
+
+
+default-lease-time 600;
+max-lease-time 7200;
+log-facility local7;
+subnet6 2001:1:20::/64 {
+    range6 2001:1:20::2 2001:1:20::200;
+    option dhcp6.name-servers 2001:4860:4860::8888, 2001:4860:4860::8844;
+    option dhcp6.domain-search "example.com";
+}
+
+
+
+default-lease-time 600;
+max-lease-time 7200;
+log-facility local7;
+subnet6 2001:1:30::/64 {
+    range6 2001:1:30::2 2001:1:30::200;
+    option dhcp6.name-servers 2001:4860:4860::8888, 2001:4860:4860::8844;
+    option dhcp6.domain-search "example.com";
+}
+
+default-lease-time 600;
+max-lease-time 7200;
+log-facility local7;
+subnet6 2001:1:40::/64 {
+    range6 2001:1:40::2 2001:1:40::200;
+    option dhcp6.name-servers 2001:4860:4860::8888, 2001:4860:4860::8844;
+    option dhcp6.domain-search "example.com";
+}
+
+
+#####
+
+
+
+vim /etc/default/isc-dhcp-server
+## change below config
+######
+
+INTERFACESv6="eth0"
+######
+
+
+sudo systemctl start isc-dhcp-server
+sudo systemctl enable isc-dhcp-server
+
+
 ```
 
 
@@ -130,6 +182,7 @@ exit
 # SW3
 
 ```
+
 interface ethernet 0/0
 switchport trunk encapsulation dot1q
 switchport mode trunk
@@ -199,3 +252,4 @@ nmcli dev show | grep 'IP4.DNS'
 
 
 ```
+

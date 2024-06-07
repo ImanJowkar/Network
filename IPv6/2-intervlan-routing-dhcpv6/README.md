@@ -27,7 +27,7 @@ domain-name iman.local
 sh ipv6 dhcp pool
 sh ipv6 dhcp binding
 
-
+ipv6 dhcp server
 
 
 
