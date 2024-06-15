@@ -1,4 +1,9 @@
-SW1
+![img](img/1.png)
+
+
+
+
+# SW1
 
 ```
 interface range ethernet 0/0-2
@@ -13,6 +18,7 @@ vtp mode server
 vtp password test hidden
 vtp pruning
 do sh vtp password
+
 
 
 vtp primary
@@ -45,15 +51,12 @@ ip routing
 
 
 
-
-
-
-
-
 ip access-list extended main-acl
 permit udp 10.10.10.0 0.0.0.255 range 1024 65535 host 10.10.40.12 eq domain
 permit icmp 10.10.10.0 0.0.0.255 host 10.10.40.10
 permit tcp host 10.10.10.152 host 10.10.40.10
+permit udp host 0.0.0.0 eq 68 host 255.255.255.255 eq 67
+41 permit icmp 10.10.10.0 0.0.0.255 host 8.8.8.8
 
 
 int vlan 10
@@ -70,7 +73,7 @@ ip addr 10.20.30.1 255.255.255.252
 
 
 
-interface range vlan 10, vlan 20, vlan 40
+interface range  vlan 10,vlan 20,vlan 40
 ip nat inside
 
 
@@ -86,13 +89,16 @@ ip nat inside source list nat-acl interface ethernet 2/0
 
 
 
+ip route 0.0.0.0 0.0.0.0 10.20.30.2
 
-# Set timezone
+
+
+! Set timezone
 clock timezone tehran 3 30
 
 
 
-# Config snmp to send to zabbix proxy 
+! Config snmp to send to zabbix proxy 
 
 snmp-server community iman ro
 
@@ -105,7 +111,7 @@ snmp-server community iman ro snmp
 
 
 
-# Set IP-sla
+! Set IP-sla
 
 ip sla 1
 icmp-echo 8.8.8.8 source-interface eth 2/0
@@ -119,7 +125,7 @@ frequency 10
 ip sla schedule 2 life forever start-time now
 
 
-sh ip sla statistics
+do sh ip sla statistics
 
 
 
@@ -127,7 +133,7 @@ sh ip sla statistics
 
 ```
 
-SW2
+# SW2
 
 ```
 interface ethernet 0/0
@@ -157,7 +163,7 @@ no vtp
 
 
 
-SW3
+# SW3
 
 ```
 interface ethernet 0/1
@@ -177,7 +183,7 @@ no vtp
 ```
 
 
-SW4
+# SW4
 
 ```
 interface ethernet 0/2
