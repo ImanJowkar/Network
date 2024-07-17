@@ -55,6 +55,8 @@ snmp-server community iman-readwrite rw
 
 ## trap
 snmp-server host 192.168.40.10 version 2c iman
+snmp-server enable trap
+
 
 ### trap inform
  snmp-server host 192.168.40.10 informs version 2c iman
