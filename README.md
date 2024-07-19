@@ -1,9 +1,9 @@
 # Networking Concepts
-This repo is about networking concepts
+This repository covers networking concepts, configurations, and documents my learning journey as I explore new topics.
+
 
 
 # Ethernet speed standard
-
 Ethernet speed standards refer to the different data rates at which Ethernet networks can transmit data. These standards have evolved over time to support faster and more efficient communication.
 
 1. Fast Ethernet: Fast Ethernet, also known as 100BASE-T, operates at a maximum data rate of 100 Mbps (megabits per second). It is the most common Ethernet standard used in home networks and small businesses.
