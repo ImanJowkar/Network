@@ -308,6 +308,11 @@ distribute-list 10 in tunnel 1
 
 
 
+! in the classic(numberd) eigrp 
+! router eigrp 2
+! distribute-list 10 in tunnel 1
+
+
 ```
 
 
