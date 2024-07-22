@@ -1,9 +1,9 @@
-# R2
+# Eigrp Stub
 
 
 ![img](img/1.png)
 
-
+# R2
 ```
 int fa 1/0
 ip addr 10.10.2.1 255.255.255.0
