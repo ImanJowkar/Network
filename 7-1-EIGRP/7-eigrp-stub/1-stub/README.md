@@ -27,6 +27,13 @@ network 10.10.2.1 0.0.0.0
 
 
 
+!router eigrp my-eig
+!address-family ipv4 unicast as 1
+!network 10.10.25.2 0.0.0.0
+!network 10.10.23.2 0.0.0.0
+!network 10.10.2.1 0.0.0.0
+
+
 
 
 ```
@@ -74,6 +81,27 @@ int serial 5/0
 ip summary-address eigrp 1 10.10.124.0/23
 
 
+
+!router eigrp my-eig
+!address-family ipv4 unicast as 1
+!eigrp stub connected summary
+!network 10.10.35.3 0.0.0.0
+!network 10.10.23.3 0.0.0.0
+!network 10.10.3.1 0.0.0.0
+!network 10.10.124.1 0.0.0.0
+!network 10.10.125.1 0.0.0.0
+!af-interface serial 5/0
+!summary-address 10.10.124.0/23
+!exit-af-interface 
+!af-interface serial 5/1
+!summary-address 10.10.124.0/23
+
+
+
+
+
+
+
 ```
 ![img](img/3.png)
 
@@ -100,6 +128,18 @@ eigrp router-id 5.5.5.5
 network 10.10.35.5 0.0.0.0
 network 10.10.25.5 0.0.0.0
 network 10.10.5.1 0.0.0.0
+
+
+
+
+
+
+
+!router eigrp my-eig
+!address-family ipv4 unicast as 1
+!network 10.10.35.5 0.0.0.0
+!network 10.10.25.5 0.0.0.0
+!network 10.10.5.1 0.0.0.0
 
 ```
 
