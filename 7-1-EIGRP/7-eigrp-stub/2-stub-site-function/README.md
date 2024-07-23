@@ -1,4 +1,4 @@
-# Eigrp Stub
+# Eigrp Stub-site-function
 
 
 ![img](img/1.png)
@@ -90,7 +90,7 @@ eigrp stub-site 100:1
 
 
 ```
-![img](img/3.png)
+
 
 
 
