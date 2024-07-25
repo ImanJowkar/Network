@@ -127,6 +127,13 @@ network 10.10.2.1 0.0.0.0
 network 10.10.22.1 0.0.0.0
 
 
+
+ip prefix-list mypref permit 10.10.25.5/32 
+
+router eigrp my-eig
+address-family ipv4 unicast as 1
+topology base 
+distribute-list gateway mypref in
 ```
 
 
