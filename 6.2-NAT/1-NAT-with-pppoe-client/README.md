@@ -93,6 +93,9 @@ exit
 ip nat inside source list NAT-ACL interface dialer 1
 
 
+
+
+do sh ip nat statistics
 ```
 
 
