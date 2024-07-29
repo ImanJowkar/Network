@@ -59,7 +59,7 @@ ppp chap password test
 
 
 do sh pppoe session 
-sh int dialer 1
+do sh int dialer 1
 
 
 ip route 0.0.0.0 0.0.0.0 dialer 1
@@ -93,4 +93,17 @@ exit
 ip nat inside source list NAT-ACL interface dialer 1
 
 
+```
+
+
+# common errors
+
+when you want to remove the nat in cisco route , sometimes it give you an error `%Dynamic mapping in use, cannot remove` , for resovling this issue: 
+
+```
+sh ip nat translation 
+clear ip nat translation *
+
+# now remove the nat
+no ip nat inside source list NAT-ACL interface dialer 1
 ```
