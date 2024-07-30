@@ -60,12 +60,15 @@ network 10.10.35.3 0.0.0.0
 
 ip access-list extended PBR-ACL
 permit ip 10.10.10.0 0.0.0.255 10.10.50.0 0.0.0.255
+permit tcp 10.10.20.0 0.0.0.255 10.10.51.0 0.0.0.255 eq 80
+
 
 
 route-map PBR-RP permit 10
 match ip address PBR-ACL
 set ip next-hop 10.10.35.5
 exit
+
 
 interface fast 0/0
 ip policy route-map PBR-RP
@@ -135,6 +138,7 @@ exit-af-interface
 
 ip access-list extended PBR-ACL
 permit ip 10.10.10.0 0.0.0.255 10.10.50.0 0.0.0.255
+permit tcp 10.10.20.0 0.0.0.255 10.10.51.0 0.0.0.255 eq 80
 
 
 route-map PBR-RP permit 10
@@ -144,6 +148,11 @@ exit
 
 interface vlan 10
 ip policy route-map PBR-RP
+
+
+interface vlan 20
+ip policy route-map  PBR-RP
+
 
 do sh ip policy
 do sh route-map
@@ -238,9 +247,10 @@ exit-af-interface
 
 
 
+
 ip access-list extended PBR-ACL
 permit ip 10.10.50.0 0.0.0.255 10.10.10.0 0.0.0.255
-
+permit tcp 10.10.51.0 0.0.0.255 eq 80 10.10.20.0 0.0.0.255 
 
 route-map PBR-RP permit 10
 match ip address PBR-ACL
@@ -249,6 +259,10 @@ exit
 
 
 interface fastEthernet 0/0.50
+ip policy route-map PBR-RP
+
+
+interface fastEthernet 0/0.51
 ip policy route-map PBR-RP
 
 do sh ip policy
