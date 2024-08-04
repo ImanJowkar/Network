@@ -52,9 +52,10 @@ track 2 ip sla 2
 delay down 10 up 10
 
 
+ip route 10.10.90.0 255.255.255.0 fastEthernet 1/0 10.10.40.2 track 1
+ip route 10.10.90.0 255.255.255.0 FastEthernet1/1 10.10.50.2 track 2
 
-
-
+do sh ip route track-table
 
 
 
@@ -99,6 +100,47 @@ do sh ip sla statistics
 
 
 sh tcp brief all numeric
+
+
+
+ip sla 10
+icmp-echo 10.10.40.1 source-interface fastEthernet 0/0
+frequency 5
+
+
+ip sla 11
+icmp-echo 10.10.50.1 source-interface fastEthernet 1/0
+frequency 5
+
+
+
+ip sla schedule 10 start-time now life forever
+ip sla schedule 11 start-time now life forever
+
+
+
+do sh ip sla statistics 
+
+
+track 10 ip sla 10
+delay down 10 up 10
+
+track 11 ip sla 11
+delay down 10 up 10
+
+
+ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0 10.10.40.1 track 10
+ip route 0.0.0.0 0.0.0.0 FastEthernet 1/0 10.10.50.1 track 11
+
+do sh ip route track-table
+
+
+
+
+
+
+
+
 ```
 
 
