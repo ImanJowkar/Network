@@ -14,7 +14,7 @@ sudo apt install rsyslog
 
 ```
 vim /etc/rsyslog.d/00-promtail-relay.conf
---------------------------------------
+
 ruleset(name="remote"){
   action(type="omfwd" Target="192.168.229.167" Port="1514" Protocol="tcp" Template="RSYSLOG_SyslogProtocol23Format" TCP_Framing="octet-counted")
 }
@@ -26,7 +26,6 @@ input(type="imudp" port="514" ruleset="remote")
 module(load="imtcp")
 input(type="imtcp" port="514" ruleset="remote")
 
----------------------------------------------------
 
 ```
 
@@ -38,4 +37,27 @@ input(type="imtcp" port="514" ruleset="remote")
 ```
 docker compose up -d
 
+```
+
+
+
+## syslog command on cisco ios
+
+```
+logging on
+logging host <syslog-server-ip-address>
+
+logging host 192.168.229.100 transport tcp port 514
+
+logging host 192.168.229.100 transport tcp port 514 session-id string R111
+logging host 192.168.229.100 transport tcp port 514 session-id hostname
+
+logging source-interface loopback 0
+
+logging trap 5          # send from level 5 to lower
+
+show logging
+
+
+no logging console      # don't show any log on console
 ```
