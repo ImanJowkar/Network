@@ -60,4 +60,9 @@ show logging
 
 
 no logging console      # don't show any log on console
+
+
+
+int fa 0/0
+no logging event link-status     # on interface which connected to the end user
 ```
