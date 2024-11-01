@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  grafana:
+    image: hub.hamdocker.ir/grafana/grafana:11.2.0-ubuntu
+    container_name: grafana
+    ports:
+      - 3000:3000
+    restart: always
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SERVER_HTTP_PORT=3000
+    networks:
+      - monitoring
+
+  loki:
+    container_name: loki
+    image: hub.hamdocker.ir/grafana/loki:2.9.10
+    restart: always
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - loki_data:/loki
+    networks:
+      - monitoring
+
+  promtail:
+    container_name: promtail
+    image: hub.hamdocker.ir/grafana/promtail:2.9.10
+    volumes:
+      - ./promtail/:/etc/promtail/
+    command: -config.file=/etc/promtail/promtail.yaml
+    ports:
+      - 1514:1514
+    networks:
+      - monitoring
+
+volumes:
+  grafana_data:
+  loki_data:
+
+
+networks:
+  monitoring:
+    driver: bridge
