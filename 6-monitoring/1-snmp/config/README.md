@@ -70,6 +70,10 @@ snmp-server enable trap
 
 ```
 
+# noauth   --> No Authentication  / No encription
+# auth     --> Authentication     / No encription
+# priv     -->  Authentication  / Encriyption
+
 snmp-server group A v3 noauth read
 snmp-server group B v3 auth read
 snmp-server group C v3 priv read
