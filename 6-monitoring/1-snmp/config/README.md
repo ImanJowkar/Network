@@ -1,35 +1,5 @@
 # SNMP
 
-
-### version 1
-```
-# read-only
-snmp-server community iman ro
-
-
-# if you want to restrict the ip 
-ip access-list standard snmp
-permit 192.168.40.10
-exit
-snmp-server community iman ro snmp
-
-
-
-# -------------------
-
-# you can define multiple community-string , one of them is readonly and another is read-write
-snmp-server community iman-readonly ro
-snmp-server community iman-readwrite rw
-
-# -------------------
-
-## trap
-snmp-server host 192.168.40.10 iman
-
-
-```
-
-
 ### version 2c
 ```
 
@@ -37,11 +7,11 @@ snmp-server host 192.168.40.10 iman
 snmp-server community iman ro
 
 
-# if you want to restrict the ip 
-ip access-list standard snmp
+# if you want to restrict the ip
+ip access-list standard snmp-acl
 permit 192.168.40.10
 exit
-snmp-server community iman ro snmp
+snmp-server community iman ro snmp-acl
 
 
 
