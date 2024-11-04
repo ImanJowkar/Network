@@ -66,3 +66,12 @@ no logging console      # don't show any log on console
 int fa 0/0
 no logging event link-status     # on interface which connected to the end user
 ```
+
+
+
+## logQL
+```
+{hostname=~"10.10.1.100|10.11.1.2"} |= "down"
+
+
+```
