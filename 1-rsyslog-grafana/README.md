@@ -74,11 +74,31 @@ service timestamps log datetime show-timezone localtime
 service timestamps log datetime msec    # use this if all your network devices located in different timezone
 ```
 
+# ssh-log
+
+```
+ip domain-name iman.local
+crypto key generate rsa modulus 2048
+ip ssh version 2
+ip ssh logging events
+ip ssh authentication-retries 5
+
+
+username iman secret iman
+enable secret iman
+line vty 0 2
+transport input ssh
+login local
+
+```
+
+
 
 
 ## logQL
 ```
 {hostname=~"10.10.1.100|10.11.1.2"} |= "down"
 
+{job="syslog"} |= "Failed" 
 
 ```
