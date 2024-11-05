@@ -65,6 +65,13 @@ no logging console      # don't show any log on console
 
 int fa 0/0
 no logging event link-status     # on interface which connected to the end user
+
+
+
+service timestamps log datetime localtime    # use this if all your network devices located in the same timezone
+service timestamps log datetime show-timezone localtime
+
+service timestamps log datetime msec    # use this if all your network devices located in different timezone
 ```
 
 
