@@ -26,7 +26,7 @@ ip addr 192.168.16.1 255.255.255.252
 int ethernet 0/0.17
 encap dot1q 17
 ip vrf forwarding lan-b 
-ip addr 192.168.17.1 255.255.255.252
+ip addr 10.10.17.1 255.255.255.252
 
 
 int eth 1/1
@@ -51,7 +51,7 @@ do sh ip vrf
 
 ip route vrf lan-a 172.16.2.0 255.255.255.0 192.168.16.2
 
-ip route vrf lan-b 172.17.2.0 255.255.255.0 192.168.17.2
+ip route vrf lan-b 172.17.2.0 255.255.255.0 10.10.17.2
 
 
 
@@ -103,7 +103,7 @@ ip addr 192.168.16.2 255.255.255.252
 int ethernet 0/0.17
 encap dot1q 17
 vrf forwarding lan-b 
-ip addr 192.168.17.2 255.255.255.252
+ip addr 10.10.17.2 255.255.255.252
 
 int eth 1/1
 no sh
@@ -124,7 +124,7 @@ do ping vrf lan-a 192.168.16.1
 ip route vrf lan-a 172.16.1.0 255.255.255.0 eth0/0.16 192.168.16.1
 
 
-ip route vrf lan-b 172.17.1.0 255.255.255.0 192.168.17.1
+ip route vrf lan-b 172.17.1.0 255.255.255.0 10.10.17.1
 
 
 vrf definition lan-a

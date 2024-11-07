@@ -126,7 +126,7 @@ exit
 
 interface gigabitEthernet 0/0/0.17
 encapsulation dot1Q 17
-ip address 192.168.17.1 255.255.255.0
+ip address 10.10.17.1 255.255.255.0
 exit
 
 
@@ -144,8 +144,8 @@ exit
 
 
 ip dhcp pool vlan17
-network 192.168.17.0 255.255.255.0
-default-router 192.168.17.1
+network 10.10.17.0 255.255.255.0
+default-router 10.10.17.1
 dns-server 8.8.8.8
 exit
 
@@ -159,7 +159,7 @@ exit
 
 ip dhcp excluded-address 192.168.15.1 192.168.15.20
 ip dhcp excluded-address 192.168.16.1 192.168.16.20
-ip dhcp excluded-address 192.168.17.1 192.168.17.20
+ip dhcp excluded-address 10.10.17.1 10.10.17.20
 
 
 
@@ -221,7 +221,7 @@ exit
 ip nat inside source list vlan15 interface gigabitEthernet 0/0/1
 
 ip access-list standard vlan17
-permit 192.168.17.0 0.0.0.255
+permit 10.10.17.0 0.0.0.255
 exit
 ip nat inside source list vlan17 interface gigabitEthernet 0/0/1
 
