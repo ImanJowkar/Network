@@ -79,21 +79,6 @@ ip addr 10.10.90.1 255.255.255.0
 
 
 
-! http sla
-ip sla 1
-http get http://10.10.90.10
-frequency 60
-ip sla schedule 1 start-time now life forever
-
-
-
-
-! tcp connect sla
-ip sla 2
-tcp-connect 10.10.90.12 21 control disable
-frequency 60
-ip sla schedule 2 start-time now life forever
-
 
 
 do sh ip sla statistics
