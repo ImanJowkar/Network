@@ -35,7 +35,7 @@ ip nhrp network-id 1
 ip nhrp authentication AdEs124
 ip nhrp nhs 172.16.1.11
 ip nhrp map 172.16.1.11 1.1.1.2
-!ip nhrp map multicast 1.1.1.2
+ip nhrp map multicast 1.1.1.2
 ip nhrp holdtime 600
 ip nhrp registration no-unique
 tunnel source 1.1.2.2
