@@ -1,7 +1,7 @@
-# VTI over IPsec ( IKE version-1 & IPsec Profile)
-### virtual tunnel interfaces
-
+# GRE over IPsec ( IKE version-1 & IPsec Profile)
 ![img](./1.png)
+
+
 ## R11
 ```
 interface Tunnel0
@@ -10,7 +10,6 @@ interface Tunnel0
  ip addr 172.16.1.11 255.255.255.0
  ip mtu 1400
  ip tcp adjust-mss 1360
- tunnel mode ipsec ipv4
 
 
 interface Tunnel1
@@ -19,11 +18,10 @@ interface Tunnel1
  ip addr 172.17.1.11 255.255.255.0
  ip mtu 1400
  ip tcp adjust-mss 1360
- tunnel mode ipsec ipv4
 
 
 
-   
+
 
 crypto isakmp policy 10
  encr aes 256
@@ -34,14 +32,16 @@ crypto isakmp key secret address 0.0.0.0
 
 
 crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac 
- mode tunnel
+ mode transport
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
 
 
-int range tun 0-1
+interface range tunnel 0-1
  tunnel protection ipsec profile IPSEC-PRO
+
+
 
 router eig 1
  network 172.16.1.11 0.0.0.0
@@ -62,8 +62,6 @@ interface Tunnel1
  ip addr 172.17.1.17 255.255.255.0
  ip mtu 1400
  ip tcp adjust-mss 1360
- tunnel mode ipsec ipv4
- 
 
 
 
@@ -76,15 +74,16 @@ crypto isakmp key secret address 0.0.0.0
 
 
 crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac 
- mode tunnel
+ mode transport
 
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
 
 
-int tun 1
+interface range tunnel 1
  tunnel protection ipsec profile IPSEC-PRO
+ 
 
 router eig 1
  network 172.17.1.17 0.0.0.0
@@ -108,7 +107,6 @@ interface Tunnel0
  ip addr 172.16.1.5 255.255.255.0
  ip mtu 1400
  ip tcp adjust-mss 1360
- tunnel mode ipsec ipv4
 
 
 
@@ -121,16 +119,17 @@ crypto isakmp key secret address 0.0.0.0
 
 
 crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac 
- mode tunnel
+ mode transport
 
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
 
 
-
-int tun 0
+interface range tunnel 0
  tunnel protection ipsec profile IPSEC-PRO
+
+
 
 router eig 1
  network 172.16.1.5 0.0.0.0

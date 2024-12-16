@@ -1,7 +1,5 @@
-# GRE over IPsec ( IKE version-1 & IPsec Profile)
+# GRE over IPsec ( IKE version-1 & Crypto Map)
 ![img](./1.png)
-
-
 ## R11
 ```
 interface Tunnel0
@@ -21,8 +19,8 @@ interface Tunnel1
 
 
 
-   
 
+! phase 1 
 crypto isakmp policy 10
  encr aes 256
  hash sha512
@@ -31,18 +29,37 @@ crypto isakmp policy 10
 crypto isakmp key secret address 0.0.0.0 
 
 
+
+! phase 2
 crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac 
  mode transport
 
-crypto ipsec profile IPSEC-PRO
+
+ip access-list extended Branch-1-R17
+ permit gre host 1.1.1.2 host 1.1.4.3
+
+
+ip access-list extended Branch-2-R5
+ permit gre host 1.1.1.2 host 1.1.2.2
+
+
+
+
+crypto map C-MAP 10 ipsec-isakmp
+ set peer 1.1.4.3
  set transform-set T-SET
+ match address Branch-1-R17
 
 
-interface range tunnel 0-1
- tunnel protection ipsec profile IPSEC-PRO
+crypto map C-MAP 20 ipsec-isakmp
+ set peer 1.1.2.2
+ set transform-set T-SET
+ match address Branch-2-R5
 
 
 
+int serial 5/0
+ crypto map C-MAP
 
 
 
@@ -58,7 +75,6 @@ router eig 1
 
 ## R17
 ```
-
 interface Tunnel1
  tunnel source 1.1.4.3
  tunnel destination 1.1.1.2
@@ -80,21 +96,26 @@ crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac
  mode transport
 
 
-crypto ipsec profile IPSEC-PRO
+ip access-list extended HQ-R11
+ permit gre host 1.1.4.3 host 1.1.1.2
+
+
+crypto map C-MAP 10 ipsec-isakmp 
+ set peer 1.1.1.2
  set transform-set T-SET
+ match address HQ-R11
 
 
-interface range tunnel 1
- tunnel protection ipsec profile IPSEC-PRO
- 
+
+
+int serial 5/0
+ crypto map  C-MAP
+
 
 router eig 1
  network 172.17.1.17 0.0.0.0
  network 172.16.100.1 0.0.0.0
  network 172.16.150.1 0.0.0.0
-
-
-
 
 ```
 
@@ -103,7 +124,6 @@ router eig 1
 
 ## R5
 ```
-
 interface Tunnel0
  tunnel source 1.1.2.2
  tunnel destination 1.1.1.2
@@ -125,13 +145,20 @@ crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac
  mode transport
 
 
-crypto ipsec profile IPSEC-PRO
+ip access-list extended HQ-R11
+ permit gre host 1.1.2.2 host 1.1.1.2
+
+
+crypto map C-MAP 10 ipsec-isakmp 
+ set peer 1.1.1.2
  set transform-set T-SET
+ match address HQ-R11
 
 
-interface range tunnel 0
- tunnel protection ipsec profile IPSEC-PRO
 
+
+int serial 5/0
+ crypto map  C-MAP
 
 
 router eig 1

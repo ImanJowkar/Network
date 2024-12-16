@@ -6,14 +6,14 @@
 ```
 
 int tun 0
-ip nhrp network-id 1
-ip nhrp authentication AdEs124
-ip nhrp map multicast dynamic
-tunnel source serial 5/0
-tunnel mode gre multipoint
-ip mtu 1400
-ip tcp adjust-mss 1360
-ip addr 172.16.1.11 255.255.255.0
+ ip nhrp network-id 1
+ ip nhrp authentication AdEs124
+ ip nhrp map multicast dynamic
+ tunnel source serial 2/0
+ tunnel mode gre multipoint
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ ip addr 172.16.1.11 255.255.255.0
 
 
 
@@ -25,7 +25,7 @@ crypto ikev2 keyring MY_KEY
 
 crypto ikev2 profile IKE-PROF
  match identity remote address 0.0.0.0
- authentication remote pre-share 
+ authentication remote pre-share
  authentication local pre-share 
  keyring local MY_KEY
 
@@ -74,7 +74,7 @@ int tun 0
 ip nhrp network-id 1
 ip nhrp authentication AdEs124
 ip nhrp nhs 172.16.1.11 nbma 1.1.1.2 multicast
-tunnel source serial 5/0
+tunnel source serial 2/0
 tunnel mode gre multipoint
 ip nhrp holdtime 600
 ip nhrp registration no-unique
@@ -147,7 +147,7 @@ int tun 0
 ip nhrp network-id 1
 ip nhrp authentication AdEs124
 ip nhrp nhs 172.16.1.11 nbma 1.1.1.2 multicast
-tunnel source serial 5/0
+tunnel source serial 2/0
 tunnel mode gre multipoint
 ip nhrp holdtime 600
 ip nhrp registration no-unique
@@ -190,7 +190,6 @@ crypto ipsec profile IPSEC-PROFILE
 
 int tun 0
  tunnel protection ipsec profile IPSEC-PROFILE
-
 
 
 
