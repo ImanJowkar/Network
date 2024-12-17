@@ -36,12 +36,14 @@ crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
+ set pfs group14
 
+crypto ipsec security-association replay window-size 1024
 
 interface range tunnel 0-1
  tunnel protection ipsec profile IPSEC-PRO
 
-
+do sh crypto ipsec sa
 
 router eig 1
  network 172.16.1.11 0.0.0.0
@@ -79,7 +81,10 @@ crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
+ set pfs group14
 
+
+crypto ipsec security-association replay window-size 1024
 
 interface range tunnel 1
  tunnel protection ipsec profile IPSEC-PRO
@@ -124,7 +129,9 @@ crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
+ set pfs group14
 
+crypto ipsec security-association replay window-size 1024
 
 interface range tunnel 0
  tunnel protection ipsec profile IPSEC-PRO

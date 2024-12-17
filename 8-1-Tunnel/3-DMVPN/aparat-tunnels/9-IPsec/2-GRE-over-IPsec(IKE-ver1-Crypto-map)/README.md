@@ -49,16 +49,19 @@ crypto map C-MAP 10 ipsec-isakmp
  set peer 1.1.4.3
  set transform-set T-SET
  match address Branch-1-R17
+ set pfs group14
 
 
 crypto map C-MAP 20 ipsec-isakmp
  set peer 1.1.2.2
  set transform-set T-SET
  match address Branch-2-R5
+ set pfs group14
+
+crypto ipsec security-association replay window-size 1024
 
 
-
-int serial 5/0
+int serial 2/0
  crypto map C-MAP
 
 
@@ -104,11 +107,12 @@ crypto map C-MAP 10 ipsec-isakmp
  set peer 1.1.1.2
  set transform-set T-SET
  match address HQ-R11
+ set pfs group14
 
 
+crypto ipsec security-association replay window-size 1024
 
-
-int serial 5/0
+int serial 2/0
  crypto map  C-MAP
 
 
@@ -153,11 +157,12 @@ crypto map C-MAP 10 ipsec-isakmp
  set peer 1.1.1.2
  set transform-set T-SET
  match address HQ-R11
+ set pfs group14
 
 
+crypto ipsec security-association replay window-size 1024
 
-
-int serial 5/0
+int serial 2/0
  crypto map  C-MAP
 
 

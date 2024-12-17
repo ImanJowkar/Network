@@ -5,6 +5,16 @@
 # R11
 
 ```
+
+int serial 2/0
+no sh
+ip addr 1.1.1.2 255.255.255.252
+
+
+ip route 0.0.0.0 0.0.0.0 1.1.1.1
+
+
+
 vrf definition A
  !
  address-family ipv4
@@ -76,6 +86,17 @@ exit
 # R17
 
 ```
+
+
+int serial 2/0
+no sh
+ip addr 1.1.4.3 255.255.255.0
+
+
+ip route 0.0.0.0 0.0.0.0 1.1.4.1
+
+
+
 
 vrf definition A
  !

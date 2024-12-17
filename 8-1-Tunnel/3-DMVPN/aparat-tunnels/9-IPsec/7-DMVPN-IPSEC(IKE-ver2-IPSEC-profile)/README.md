@@ -41,7 +41,9 @@ crypto ipsec transform-set T-SET esp-aes esp-sha-hmac
  mode transport
 
 crypto ipsec security-association replay window-size 1024
-
+crypto ikev2 limit max-in-negotation-sa 60 incoming
+crypto ikev2 limit max-in-negotation-sa 60 outgoing
+crypto ikev2 cookie-challenge 20
 
 crypto ipsec profile IPSEC-PROFILE
  set transform-set T-SET
