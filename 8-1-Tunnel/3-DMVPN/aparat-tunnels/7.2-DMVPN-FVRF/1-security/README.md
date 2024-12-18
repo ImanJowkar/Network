@@ -3,7 +3,7 @@
 
 
 
-# R8-HQ
+# R11-HQ
 ```
 
 vrf definition ISP1
@@ -93,6 +93,8 @@ ip nhrp network-id 1
 ip nhrp nhs 172.16.1.11 nbma 1.1.1.2 multicast
 tunnel source 1.1.4.3
 tunnel mode gre multipoint
+ip nhrp holdtime 600
+ip nhrp registration no-unique
 ip mtu 1400
 ip tcp adjust-mss 1360
 
@@ -145,6 +147,8 @@ ip nhrp network-id 1
 ip nhrp nhs 172.16.1.11 nbma 1.1.1.2 multicast
 tunnel source 1.1.2.2
 tunnel mode gre multipoint
+ip nhrp holdtime 600
+ip nhrp registration no-unique
 ip mtu 1400
 ip tcp adjust-mss 1360
 
