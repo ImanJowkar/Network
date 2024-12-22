@@ -31,6 +31,7 @@ crypto map C-MAP 10 ipsec-isakmp
  set peer 172.16.1.5
  set transform-set T-SET
  match address IPSEC-ACL
+ set pfs group14
 
 
 

@@ -35,7 +35,10 @@ crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
+ set pfs group14
 
+
+crypto ipsec security-association replay window-size 1024
 
 
 
@@ -84,7 +87,10 @@ crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
+ set pfs group14
 
+
+crypto ipsec security-association replay window-size 1024
 
 
 
@@ -139,7 +145,10 @@ crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
+ set pfs group14
 
+
+crypto ipsec security-association replay window-size 1024
 
 
 
@@ -192,7 +201,10 @@ crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac
 
 crypto ipsec profile IPSEC-PRO
  set transform-set T-SET
+ set pfs group14
 
+
+crypto ipsec security-association replay window-size 1024
 
 
 

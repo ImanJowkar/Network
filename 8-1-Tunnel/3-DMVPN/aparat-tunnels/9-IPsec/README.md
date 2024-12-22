@@ -31,6 +31,30 @@
 
 
 # IKE Phase1 and Phase2
-* Phase-1: use for transfering control plane data. phase-1 tunnel is very secure
+* Phase-1(ISAKMP): use for transfering control plane data. phase-1 tunnel is very secure
 
 * Phase-2: use for transfering data plane
+
+
+Here's a more concise summary of **IKE Phase 1** and **Phase 2**:
+
+### **IKE Phase 1**: 
+- **Purpose**: Securely authenticate and establish a trusted communication channel.
+- **Steps**:
+  1. Devices authenticate each other (using PSK or certificates).
+  2. Agree on encryption algorithms.
+  3. Exchange keys to create a secure channel.
+- **Outcome**: A secure, encrypted connection (IKE SA) for further communication.
+
+### **IKE Phase 2**: 
+- **Purpose**: Set up the actual VPN tunnel for encrypted data transfer.
+- **Steps**:
+  1. Negotiate parameters for data encryption (like AES, SHA).
+  2. Use keys from Phase 1 to encrypt/decrypt traffic.
+- **Outcome**: A secure VPN tunnel is established for transferring encrypted data.
+
+### In Short:
+- **Phase 1**: Sets up secure communication.
+- **Phase 2**: Creates the VPN tunnel for data encryption.
+
+These phases ensure secure, authenticated, and encrypted communication between devices over a potentially untrusted network.
