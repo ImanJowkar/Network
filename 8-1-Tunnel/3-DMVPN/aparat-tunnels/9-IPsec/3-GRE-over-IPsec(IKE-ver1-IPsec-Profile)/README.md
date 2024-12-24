@@ -26,7 +26,7 @@ interface Tunnel1
 
 crypto isakmp policy 10
  encr aes 256
- hash sha512
+ hash sha256
  authentication pre-share
  group 14
 crypto isakmp key secret address 0.0.0.0 
@@ -70,7 +70,7 @@ interface Tunnel1
 
 crypto isakmp policy 10
  encr aes 256
- hash sha512
+ hash sha256
  authentication pre-share
  group 14
 crypto isakmp key secret address 0.0.0.0 
@@ -91,13 +91,7 @@ interface range tunnel 1
  tunnel protection ipsec profile IPSEC-PRO
  
 
-router eig 1
- network 172.17.1.17 0.0.0.0
- network 172.16.100.1 0.0.0.0
- network 172.16.150.1 0.0.0.0
-
-
-
+C
 
 ```
 
@@ -118,7 +112,7 @@ interface Tunnel0
 
 crypto isakmp policy 10
  encr aes 256
- hash sha512
+ hash sha256
  authentication pre-share
  group 14
 crypto isakmp key secret address 0.0.0.0 

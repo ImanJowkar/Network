@@ -24,7 +24,7 @@ interface Tunnel1
 
 
 
-   
+
 ! phase-1 
 crypto isakmp policy 10
  encr aes 256
@@ -47,6 +47,7 @@ crypto ipsec security-association replay window-size 1024
 
 int range tun 0-1
  tunnel protection ipsec profile IPSEC-PRO
+
 
 router eig 1
  network 172.16.1.11 0.0.0.0
