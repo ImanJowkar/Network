@@ -91,7 +91,10 @@ interface range tunnel 1
  tunnel protection ipsec profile IPSEC-PRO
  
 
-C
+router eig 1
+ network 172.17.1.17 0.0.0.0
+ network 172.16.100.1 0.0.0.0
+ network 172.16.150.1 0.0.0.0
 
 ```
 

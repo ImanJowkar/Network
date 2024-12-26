@@ -59,6 +59,7 @@ no next-hop-self
 ```
 ## R17
 ```
+
 int tun 1
 ip address 172.16.1.17 255.255.255.0
 ip nhrp authentication secret
@@ -117,6 +118,7 @@ network 172.16.1.17 0.0.0.0
 
 ## R5
 ```
+
 int tun 1
 ip address 172.16.1.5 255.255.255.0
 ip nhrp authentication secret
