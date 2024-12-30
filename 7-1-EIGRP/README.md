@@ -1,21 +1,214 @@
 # EIGRP
 
-Enhanced Interior Gateway Routing Protocol (EIGRP) is a Cisco-proprietary, distance vector routing protocol used to dynamically route IP packets within a network. It was developed to overcome some of the limitations of older routing protocols like RIP (Routing Information Protocol) and IGRP (Interior Gateway Routing Protocol). EIGRP falls under the category of hybrid routing protocols because it incorporates features from both distance vector and link-state routing protocols.
+## Setup Eigrp 
 
-Here are some key aspects of EIGRP:
+```
 
-1. **Advanced Metric Calculation**: Unlike traditional distance vector protocols, EIGRP uses a sophisticated metric calculation algorithm that takes into account various factors such as bandwidth, delay, reliability, load, and MTU (Maximum Transmission Unit) to determine the best path to a destination network.
+router eigrp 1
+ eigrp router-id 2.2.2.2
+ network 10.10.15.1 0.0.0.0
+ network 192.168.4.1 0.0.0.0
+ passive-interface Ethernet0/0
 
-2. **Diffusing Update Algorithm (DUAL)**: EIGRP uses the DUAL algorithm to ensure loop-free routing and fast convergence. DUAL allows routers to maintain multiple feasible successor routes to a destination, providing redundancy and faster convergence in case of link failures.
 
 
-3. **Partial Updates**: EIGRP sends only partial updates when there are changes in the network topology, reducing the amount of bandwidth consumed compared to protocols like RIP, which send complete routing updates at regular intervals.
+
+router eigrp my-eig
+ address-family ipv4 unicast autonomous-system 1
+  network 10.10.10.1 0.0.0.0
+  network 10.10.20.1 0.0.0.0
+  network 10.10.15.1 0.0.0.0
+  network 192.168.4.1 0.0.0.0
+
+  af-interface Vlan10
+   passive-interface
+  exit-af-interface
+  af-interface Vlan20
+   passive-interface
+  exit-af-interface
 
 
-4. **Route Summarization**: EIGRP allows for the summarization of routes at network boundaries, reducing the size of routing tables and minimizing the propagation of routing information.
 
-5. **Authentication**: EIGRP supports authentication mechanisms to secure routing updates exchanged between routers, ensuring that only authorized routers participate in routing processes.
 
-6. **Scalability**: EIGRP is designed to scale well in large networks, providing efficient routing in complex environments with multiple interconnected routers and subnets.
+```
 
-Overall, EIGRP is a robust and scalable routing protocol commonly used in enterprise networks, particularly those using Cisco networking equipment.
+## Authentications
+```
+! Authentication
+ ! classic only support md5(we have to use key chain)
+
+key chain eigrp-password-md5
+ key 1
+  key-string secret
+
+int eth 0/1
+ ip authentication key-chain eigrp 1 eigrp-password-md5
+ ip authentication mode eigrp 1 md5
+
+
+ ! named support md5 and sha
+    ! md5
+
+
+key chain eigrp-password-md5
+ key 1
+  key-string secret
+
+router eigrp my-eig
+ address-family ipv4 unicast autonomous-system 1
+  af-interface Ethernet0/1
+   authentication mode md5
+   authentication key-chain eigrp-password-md5
+
+
+    ! sha(don't need key chain)
+
+router eigrp my-eig
+ address-family ipv4 unicast autonomous-system 1
+  af-interface Ethernet0/1
+   authentication mode hmac-sha-256 secret
+
+
+sh ip eigrp interfaces detail ethernet 0/1
+
+
+
+
+```
+## timers in eigrp and bfd
+```
+
+! timer in eigrp 
+
+interface Ethernet1/1
+ ip hello-interval eigrp 1 2
+ ip hold-time eigrp 1 6
+
+
+
+router eigrp my-eig
+ address-family ipv4 unicast autonomous-system 1
+  af-interface Ethernet0/1
+   hello-interval 2
+   hold-time 6
+
+
+! BFD
+# in classic mode
+
+int eth 0/2
+ bfd interval 200 min_rx 200 multiplier 3
+
+router eigrp 1
+ bfd interface Ethernet0/2
+
+
+# in named mode
+int eth 0/2 
+ bfd interval 200 min_rx 200 multiplier 3
+
+
+router eigrp my-eig
+ address-family ipv4 unicast autonomous-system 1
+  af-interface Ethernet0/2
+   bfd
+  exit-af-interface
+
+```
+
+## 
+
+
+## Stub router
+
+```
+
+router eigrp 1
+ eigrp stub connected
+ ! eigrp stub  # by default connected and summary
+
+
+
+router eigrp my-eig
+ address-family ipv4 unicast autonomous-system 1
+  eigrp stub connected
+  !eigrp stub connected summary
+
+
+```
+
+
+## Stub-Site-Function - only support on IOS-XE and in named mode configuration
+
+```
+
+
+```
+
+
+## change bandwidth percentage
+```
+
+int eth 0/0
+ ip bandwidth-percentage eigrp 1 30
+
+
+router eig myeig
+ address-family ipv4 unicast as 1
+  af-interface 0/0
+   bandwidth-percentage 30
+
+
+```
+
+
+## Route summerization
+
+```
+
+! summerization is per-interface
+! classic configuration
+
+int fa 1/0
+ ip summary-address eigrp 1 10.10.8.0/22
+
+
+router eigrp 1
+ no auto-summary
+ summery-metric 10.10.8.0 255.255.252.0 3000 20 255 0 1500
+
+
+
+! named configuration
+router eigrp myeig
+ address-family ipv4 unicast as 1
+  af-interface fast 1/0
+   summary-address  10.10.8.0/22
+    exit
+  topology bash
+   summery-metric 10.10.8.0 255.255.252.0 3000 20 255 0 1500
+   no auto-summary
+```
+
+
+## Route Filtering
+
+```
+
+
+
+```
+
+
+
+
+
+## IP prefix list
+
+```
+
+
+
+
+
+```
