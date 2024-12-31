@@ -185,7 +185,7 @@ router eigrp myeig
   af-interface fast 1/0
    summary-address  10.10.8.0/22
     exit
-  topology bash
+  topology base
    summery-metric 10.10.8.0 255.255.252.0 3000 20 255 0 1500
    no auto-summary
 ```
@@ -193,7 +193,114 @@ router eigrp myeig
 
 ## Route Filtering
 
+
+#### With ACL
 ```
+ip access-list standard eig-filter
+ deny   10.10.34.0 0.0.0.255
+ permit any
+
+router eigrp 1
+ distribute-list eig-filter out Ethernet1/0
+ distribute-list eig-filter out Ethernet1/1
+
+
+
+! named configuration
+router eigrp myeig
+ address-family ipv4 unicast as 1
+  topology base
+   distribute-list eig-filter out Ethernet1/0
+   distribute-list eig-filter out Ethernet1/1
+
+
+
+```
+
+
+
+#### With prefix-list
+```
+ip prefix-list eig-filter seq 5 deny 10.10.34.0/24
+ip prefix-list eig-filter seq 10 permit 0.0.0.0/0 le 32
+
+router eigrp 1
+ distribute-list prefix eig-filter out 
+
+
+
+
+
+! named configuration
+router eigrp myeig
+ address-family ipv4 unicast as 1
+  topology base
+   distribute-list prefix eig-filter out 
+
+
+
+
+
+
+ip prefix-list filter-30 seq 5 deny 0.0.0.0/0 ge 30 le 30
+ip prefix-list filter-30 seq 10 permit 0.0.0.0/0 le 32
+
+
+```
+
+
+
+
+
+
+#### With Route-Map
+
+##### Route map with ACL  standard
+
+```
+ip access-list standard eig-filter
+ permit 172.16.1.0 0.0.0.255
+ deny   any
+
+route-map filter deny 2
+ match ip address eig-filter
+route-map filter permit 6
+
+
+router eigrp 1
+ distribute-list route-map filter in ethernet 0/1
+
+
+
+
+```
+
+##### Route map with prefix list
+
+```
+
+ip prefix-list eig-filter seq 10 permit 172.16.1.0/24
+ip prefix-list eig-filter seq 15 deny 0.0.0.0/0 le 32
+
+
+
+
+
+
+
+
+```
+
+
+
+
+#### offset-list
+
+
+
+
+
+
 
 
 
@@ -207,8 +314,46 @@ router eigrp myeig
 
 ```
 
+ip prefix-list eigrp-route-filter seq 5 permit 10.10.34.0/24
+ip prefix-list eigrp-route-filter seq 10 permit 10.10.24.0/24
 
 
+ip prefix-list eigrp-route-filter seq 15 permit 10.10.34.0/24 ge 28
+  10.10.34.x     /28, /29, /30, /31, /32
+
+
+ip prefix-list eigrp-route-filter seq 20 permit 10.10.34.0/24 le 28
+  10.10.34.x     /28, /27, /26, /25, /24
+
+
+
+ip prefix-list eigrp-route-filter seq 25 permit 10.10.34.0/24 ge 28 le 30
+  10.10.34.x     /28, /29, /30
+
+
+
+ip prefix-list eigrp-route-filter seq 30 permit 10.10.34.0/16 ge 24 le 24
+  10.10.x.x     /24
+
+
+
+
+ip prefix-list eigrp-route-filter seq 35 permit 0.0.0.0/0 ge 30 le 30
+  x.x.x.x     /30
+
+
+
+ip prefix-list eigrp-route-filter seq 40 permit 0.0.0.0/0 le 32
+!  select all route
+
+ip prefix-list eigrp-route-filter seq 45 permit 0.0.0.0/0 
+!  select default route 
+
+
+
+ip prefix-list eig-filter seq 5 deny 10.1.30.0/24
+ip prefix-list eig-filter seq 10 deny 10.1.40.0/24
+ip prefix-list eig-filter seq 15 permit 0.0.0.0/0 le 32
 
 
 ```
