@@ -190,6 +190,35 @@ router eigrp myeig
    no auto-summary
 ```
 
+#### Default Route advertisement
+
+```
+! in classic eigrp 
+
+int eth 0/0
+ ip summary-address eigrp 1 0.0.0.0/0
+
+
+
+
+
+
+! in Named Eigrp 
+
+router eigrp myeig
+ address-family ipv4 unicast autonomous-system 1
+  af-interface Ethernet0/0
+   summary-address 0.0.0.0/0
+  exit-af-interface
+  af-interface Ethernet0/1
+   summary-address 0.0.0.0/0
+  exit-af-interface
+
+
+```
+
+
+
 
 ## Route Filtering
 
@@ -296,7 +325,7 @@ ip prefix-list eig-filter seq 15 deny 0.0.0.0/0 le 32
 
 #### offset-list
 
-
+```
 
 
 
@@ -310,7 +339,7 @@ ip prefix-list eig-filter seq 15 deny 0.0.0.0/0 le 32
 
 
 
-## IP prefix list
+### IP prefix list
 
 ```
 
@@ -354,6 +383,80 @@ ip prefix-list eigrp-route-filter seq 45 permit 0.0.0.0/0
 ip prefix-list eig-filter seq 5 deny 10.1.30.0/24
 ip prefix-list eig-filter seq 10 deny 10.1.40.0/24
 ip prefix-list eig-filter seq 15 permit 0.0.0.0/0 le 32
+
+
+```
+
+
+
+## EIGRP for ipv6 (EIGRPv6)
+![ima](img/1.png)
+```
+## R1
+
+ipv6 unicast-routing
+
+int eth 0/0
+ ipv6 address 2001:DB8:15::1/64
+
+int eth 0/1
+ ipv6 address 2001:DB8:18::1/64
+
+
+
+ipv6 router eigrp 50
+ eigrp router-id 1.1.1.1 ! must be set
+ exit
+
+int eth 0/0
+ ipv6 eigrp 50
+
+
+int eth 0/1
+ ipv6 eigrp 50
+
+
+
+
+
+
+! In Named Mode configuration
+
+interface Loopback1
+ no ip address
+ ipv6 address 2001:DE:1::1/64
+!         
+interface Loopback2
+ no ip address
+ ipv6 address 2001:DE:2::1/64
+!         
+interface Loopback3
+ no ip address
+ ipv6 address 2001:DE:3::1/64
+!         
+interface Loopback4
+ no ip address
+ ipv6 address 2001:DE:4::1/64
+!         
+interface Loopback5
+ no ip address
+ ipv6 address 2001:DE:5::1/64
+
+
+int eth 0/0
+ ipv6 enable
+ ipv6 addr fe80:52::2 link-local
+
+router eigrp myeig
+ address-family ipv6 unicast autonomous-system 50
+  eigrp router-id 2.2.2.2
+  af-interface default
+   passive-interface
+  exit-af-interface
+  
+  af-interface Ethernet0/0
+   no passive-interface
+  exit-af-interface
 
 
 ```
