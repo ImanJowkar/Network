@@ -194,6 +194,45 @@ router ospf 1
 ```
 
 
+#### Virtual-link
+
+```
+
+router ospf 1
+ router-id 1.1.1.1
+ area 1 virtual-link 15.15.15.15
+
+```
 
 
+
+
+
+### OSPFv3 configuration
+
+```
+ipv6 unicast-routing
+
+router ospfv3 1
+ router-id 1.1.1.1
+ address-family ipv4 unicast
+  exit-address-family
+ address-family ipv4 unicast
+  exit-address-family
+
+
+
+interface range ethernet 0/0-2
+ ipv6 enable
+ ospfv3 1 ipv4 area 0
+ ospfv3 1 ipv6 area 0
+ 
+
+interface ethernet 0/3
+ ipv6 enable
+ ospfv3 1 ipv4 area 4
+ ospfv3 network point-to-point
+ 
+
+```
 
