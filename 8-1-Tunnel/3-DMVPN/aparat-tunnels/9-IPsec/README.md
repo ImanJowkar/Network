@@ -36,4 +36,5 @@
 2) exchange and negotigate keys and parameters.
 
 
-#### Phase-2: use for transfering data plane
+#### Phase-2: use for transfering data plane (user traffik)
+
