@@ -38,3 +38,30 @@
 
 #### Phase-2: use for transfering data plane (user traffik)
 
+
+
+
+# ipsc verifications
+
+##### verification of phase-1
+```
+show crypto isakmp policy 
+show crypto isakmp key
+show crypto isakmp peers
+show crypto session
+show crypto isakmp sa
+
+
+```
+
+#### verification of phase-2
+```
+show crypto ipsec sa
+show crypto ipsec transform-set
+show crypto ipsec security-association
+show crypto ipsec spi-lookup
+
+
+```
+
+
