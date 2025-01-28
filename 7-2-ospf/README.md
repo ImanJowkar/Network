@@ -150,19 +150,60 @@ router eigrp 1
 
 
 #### Route Summerization
+note that , summerization only set in ABR router, or ASBR router
 
 ```
-### router summary only apply on ABR
+### summary only apply on ABR
 router ospf 1
-area 5 range 172.17.0.0 255.255.248.0 cost 11
+ area 17 range 192.168.120.0 255.255.252.0
+ area 5 range 172.17.0.0 255.255.248.0 cost 11
 
 
 
 
 
 ### in ASBR run below 
+router ospf 1
+ summary-address 10.255.0.0 255.255.252.0
 
-summary-address 10.255.0.0 255.255.252.0
+
+
+
+```
+
+
+
+#### ip prefix list
+
+
+```
+Ip prefix-list 192.168.1.0/24
+Ip prefix-list 192.168.3.0/24
+Ip prefix-list 172.16.0.0/16
+
+
+Ip prefix-list 10.10.10.0/24 ge 24       subnet: /24, /25, /26, /27, /28, /29, /30, /31, /32
+
+Ip prefix-list 10.10.10.0/24 ge 24 le 27     ip address: 10.10.10.x             subnet: /24, /25, /26, /27
+
+Ip prefix-list 10.10.0.0/16 ge 24 le 27     ip address: 10.10.x.x             subnet: /24, /25, /26, /27
+
+
+Ip prefix-list 10.10.0.0/16   le 20     ip address: 10.10.x.x             subnet: /20, /19, /18, /17, /16
+
+Ip prefix-list 10.10.0.0/16  ge 16 le 16     ip address: 10.10.x.x             subnet: /16
+
+Ip prefix-list 0.0.0.0/0 ge 30 le 30              ip address: x.x.x.x            subnet: /30                     # select all /30 network
+
+
+Ip prefix-list 0.0.0.0/0  le 32     # any ip address
+
+Ip prefix-list 0.0.0.0/0             # default route
+
+
+
+
+
 ```
 
 
@@ -180,8 +221,7 @@ router ospf 1
 
 
 
-## Area - filtering ( user ip prefix list)
-
+## Area - filtering ( use ip prefix list)
 
 ip prefix-list ospf-filter seq 5 deny 10.15.2.0/24
 ip prefix-list ospf-filter seq 6 deny 10.15.3.0/24
@@ -190,6 +230,9 @@ ip prefix-list ospf-filter seq 20 permit 0.0.0.0/0 le 32
 
 router ospf 1
  area 4 filter-list prefix ospf-filter in
+
+
+
 
 ```
 
@@ -217,8 +260,12 @@ router ospfv3 1
  router-id 1.1.1.1
  address-family ipv4 unicast
   exit-address-family
- address-family ipv4 unicast
+ address-family ipv6 unicast
   exit-address-family
+ 
+ 
+
+
 
 
 
@@ -234,5 +281,21 @@ interface ethernet 0/3
  ospfv3 network point-to-point
  
 
+
+
+
 ```
 
+
+### Mikrotik
+##### route filtering
+
+```
+
+if (dst in 10.10.54.0/24 && dst-len in 24) {reject;}
+if (dst in 10.10.205.0/24 && dst-len in 24) {reject;}else{accept}
+
+
+
+
+```
