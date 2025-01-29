@@ -33,15 +33,48 @@ ip access-list standard NAT-ACL
 
 
 ip nat inside source list NAT-ACL interface ethernet 1/1 overload		# inside = source NAT
+                                                                        # Outside = DST-NAT
+
+
+
+sh ip nat translations
+sh ip nat statistics
+
+
+
+# port-forwarding
+
+ip nat inside source static tcp 10.10.20.10 80 172.16.1.1 6060 
+
+ip nat inside source static tcp 10.10.20.10 80 172.16.1.1 8080
+ip nat inside source static tcp 10.10.10.100 80 172.16.1.1 9090
+
+
+
+
+```
+
+
+
+
+### Create Pool 
+
+```
+
+ip nat pool NAT-POOL 172.16.1.0 172.16.1.15 netmask 255.255.255.240
+
+ip access-list standard NAT-ACL
+ permit 10.10.10.0 0.0.0.255
 
 
 
 
 
 
+ip nat inside source list NAT-ACL pool NAT-POOL overload
 
 
-
+sh ip nat statistics
 
 
 ```
