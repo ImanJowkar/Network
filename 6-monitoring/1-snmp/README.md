@@ -44,25 +44,43 @@ snmp-server enable trap
 # auth     --> Authentication     / No encription
 # priv     -->  Authentication  / Encriyption
 
-snmp-server group A v3 noauth read
-snmp-server group B v3 auth read
-snmp-server group C v3 priv read
 
 
-snmp-server user A1 A v3
-snmp-server user B1 B v3 auth sha iman
-snmp-server user C1 C v3 auth md5 iman priv aes 256 iman
+
+snmp-server group group-A v3 noauth
+snmp-server group gruop-B v3 auth
+snmp-server group gruop-C v3 priv
+
+
+snmp-server user myuserA1 group-A v3
+snmp-server user myuserB1 gruop-B v3 auth sha iman
+snmp-server user myuserC1 gruop-C v3 auth md5 iman priv aes 256 iman
 
 
 
 ip access-list standard snmp
 permit 192.168.40.10
 exit
-nmp-server user C1 C v3 auth md5 iman priv aes 256 iman access snmp
+nmp-server user myuserC1 gruop-C v3 auth md5 iman priv aes 256 iman access snmp
 
 
 # trap 
 snmp-server host 192.168.40.10 informs version 3 priv C1
+
+
+
+```
+
+
+# snmp-v3-finall
+
+
+```
+snmp-server group gruop-C v3 priv
+ip access-list standard snmp
+permit 192.168.40.10
+exit
+snmp-server user myuserC1 gruop-C v3 auth md5 iman55555555 priv aes 256 iman55555555 access snmp
 
 
 
