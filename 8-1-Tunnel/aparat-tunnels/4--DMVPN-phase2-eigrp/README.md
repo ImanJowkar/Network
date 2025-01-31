@@ -36,6 +36,34 @@ af-interface tunnel 0
 no split-horizon
 no next-hop-self
 
+
+
+
+
+! phase-1 
+crypto isakmp policy 10
+ encr aes 256
+ hash sha512
+ authentication pre-share
+ group 14
+crypto isakmp key secret address 0.0.0.0 
+
+! phase-2
+crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac 
+ mode transport
+
+
+crypto ipsec profile IPSEC-PRO
+ set transform-set T-SET
+! set pfs group14
+
+
+crypto ipsec security-association replay window-size 1024
+
+int tun 0
+ tunnel protection ipsec profile IPSEC-PRO
+
+
 ```
 
 
@@ -69,6 +97,8 @@ network 10.10.50.1 0.0.0.0
 network 172.16.1.5 0.0.0.0
 
 
+int tun 0
+ tunnel protection ipsec profile IPSEC-PRO
 
 
 
@@ -108,6 +138,8 @@ network 172.16.1.17 0.0.0.0
 
 
 
+int tun 0
+ tunnel protection ipsec profile IPSEC-PRO
 
 
 ```

@@ -29,6 +29,32 @@ no split-horizon
 
 
 
+! phase-1 
+crypto isakmp policy 10
+ encr aes 256
+ hash sha512
+ authentication pre-share
+ group 14
+crypto isakmp key secret address 0.0.0.0 
+
+! phase-2
+crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac 
+ mode transport
+
+
+crypto ipsec profile IPSEC-PRO
+ set transform-set T-SET
+! set pfs group14
+
+
+crypto ipsec security-association replay window-size 1024
+
+int tun 0
+ tunnel protection ipsec profile IPSEC-PRO
+
+
+
+
 ```
 
 
@@ -41,17 +67,49 @@ ip mtu 1400
 ip tcp adjust-mss 1360
 ip nhrp network-id 1
 ip nhrp authentication AdEs124
+tunnel source eth 0/0
+tunnel destin 1.1.1.2
 ip nhrp nhs 172.16.1.11 nbma 1.1.1.2 multicast
+
 ip nhrp holdtime 600
 ip nhrp registration no-unique
-tunnel source 1.1.2.2
-tunnel destin 1.1.1.2
+
+
+
 
 
 router eig eig-dmvnp
 address-family ipv4 unicast as 2
 network 10.10.50.1 0.0.0.0
 network 172.16.1.5 0.0.0.0
+
+
+
+
+! phase-1 
+crypto isakmp policy 10
+ encr aes 256
+ hash sha512
+ authentication pre-share
+ group 14
+crypto isakmp key secret address 0.0.0.0 
+
+! phase-2
+crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac 
+ mode transport
+
+
+crypto ipsec profile IPSEC-PRO
+ set transform-set T-SET
+! set pfs group14
+
+
+crypto ipsec security-association replay window-size 1024
+
+int  tun 0
+ tunnel protection ipsec profile IPSEC-PRO
+
+
 
 
 ```
@@ -66,11 +124,12 @@ ip mtu 1400
 ip tcp adjust-mss 1360
 ip nhrp network-id 1
 ip nhrp authentication AdEs124
+tunnel source eth 0/0
+tunnel destin 1.1.1.2
 ip nhrp nhs 172.16.1.11 nbma 1.1.1.2 multicast
+
 ip nhrp holdtime 600
 ip nhrp registration no-unique
-tunnel source 1.1.4.3
-tunnel destin 1.1.1.2
 
 
 
@@ -79,6 +138,34 @@ address-family ipv4 unicast as 2
 network 172.16.100.1 0.0.0.0
 network 172.16.150.1 0.0.0.0
 network 172.16.1.17 0.0.0.0
+
+
+
+
+
+
+! phase-1 
+crypto isakmp policy 10
+ encr aes 256
+ hash sha512
+ authentication pre-share
+ group 14
+crypto isakmp key secret address 0.0.0.0 
+
+! phase-2
+crypto ipsec transform-set T-SET esp-aes 128 esp-sha-hmac 
+ mode transport
+
+
+crypto ipsec profile IPSEC-PRO
+ set transform-set T-SET
+! set pfs group14
+
+
+crypto ipsec security-association replay window-size 1024
+
+int  tun 0
+ tunnel protection ipsec profile IPSEC-PRO
 
 
 ```
