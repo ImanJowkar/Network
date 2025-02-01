@@ -76,12 +76,11 @@ snmp-server host 192.168.40.10 informs version 3 priv C1
 
 
 ```
-snmp-server group gruop-C v3 priv
+snmp-server group mygroup v3 priv
 ip access-list standard snmp
 permit 192.168.40.10
 exit
-snmp-server user myuserC1 gruop-C v3 auth md5 iman55555555 priv aes 256 iman55555555 access snmp
-
+snmp-server user iman mygroup v3 auth md5 iman55555555 priv aes 256 iman55555555 access snmp
 
 
 ```
