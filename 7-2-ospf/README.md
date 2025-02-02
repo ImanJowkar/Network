@@ -202,6 +202,13 @@ Ip prefix-list 0.0.0.0/0             # default route
 
 
 
+### select all private ip address
+
+ip prefix-list 10.0.0.0/8 le 32
+ip prefix-list 172.16.0.0/12 le 32
+ip prefix-list 192.168.0.0/16 le 32
+
+
 
 
 ```
