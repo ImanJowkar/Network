@@ -18,10 +18,19 @@ BGP work with 179/tcp, and is an aplication layer protocol
 
 ```
 router bgp 100
+ bgp router-id 1.1.1.1
  neighbor 10.10.0.0 remote-as 500
  neighbor 10.10.0.0 update-source loopback1 
  neighbor 10.10.0.0 ebgp-multihop 6
+ neighbor 10.10.0.0 description this is provider-1
+ neighbor 10.10.0.0 password bgpiman
+ neighbor 10.10.0.0 timers keep_alive hold_time min_hold_time
 
+ address-family ipv4 unicast 
+  neighbor 10.10.0.0 activate
+
+! keep-alive by default is : 60s
+! hold time by default is : 180s
 
 # monitoring
 sh bgp ipv4 unicast neighbors | inc BGP neighbor is | BGP state =
@@ -30,20 +39,21 @@ alias exec mynei sh bgp ipv4 unicast neighbors | inc BGP neighbor is | BGP state
 
 ```
 
-# addvertise a route using network command
+
+# advertise a route using network command
 
 ```
-ip rotue 11.22.10.0 255.255.255.0 null 0
+ip rotue 10.22.10.0 255.255.255.0 null 0
 
 router bgp 100
  address-family ipv4 unicast
-  network 11.22.10.0 mask 255.255.255.0
+  network 10.22.10.0 mask 255.255.255.0
 
 
 
 # addvertise a route with redistribute and route-map
 
-ip prefix-list bgpadvertise seq 5 permit 11.22.10.0/24
+ip prefix-list bgpadvertise seq 5 permit 10.22.10.0/24
 route-map bgpad permit 10
  match ip address prefix-list bgpadvertise
  exit
@@ -64,6 +74,15 @@ rotuer bgp 100
 ```
 
 
+router bgp 500
+ neighbor 2.2.2.2 remote-as 500
+ neighbor 2.2.2.2 update-source loopback1
+ neighbor 2.2.2.2 next-hop-self
+
+ neighbor 4.4.4.4 remote-as 500
+ neighbor 4.4.4.4 update-source loopback1
+ neighbor 4.4.4.4 next-hop-self
+ neighbor 4.4.4.4 route-reflector-client
 
 
 ```
