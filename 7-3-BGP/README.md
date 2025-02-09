@@ -51,7 +51,7 @@ router bgp 100
 
 
 
-# addvertise a route with redistribute and route-map
+# addvertise static route with redistribute and route-map
 
 ip prefix-list bgpadvertise seq 5 permit 10.22.10.0/24
 route-map bgpad permit 10
@@ -127,14 +127,103 @@ router bgp 200
  neighbor 10.10.4.7 distribute-list bgp-filter out
 
 
+```
 
 
-********************************************************
-## regular expresions
-
-
-
-
+### filtering with prefix list
 
 ```
+
+ip prefix-list bgp-filter seq 5 permit 21.22.110.0/24
+
+
+router bgp 500
+neighbor 10.4.4.4 prefix-list bgp-filter out 
+neighbor 10.2.2.2 prefix-list bgp-filter out
+
+```
+
+#### filtering with Regex
+
+```
+
+ip as-path access-list 100 permit ^$
+
+
+router bgp 500
+ neighbor 10.2.2.2 filter-list 100 out
+ neighbor 10.4.4.4 filter-list 100 out
+
+
+
+sh bgp ipv4 unicast neighbors 10.2.2.2 advertised-routes 
+
+```
+
+## filtering with route-map
+### with standard ACL
+```
+ip access-list standard bgp-filter
+ permit 21.22.110.0 0.0.0.255
+
+route-map bgp-filter permit 20
+ match ip address bgp-filter
+
+router bgp 500
+  neighbor 10.4.4.4 route-map bgp-filter out
+  neighbor 10.2.2.2 route-map bgp-filter out
+
+```
+
+### with extended ACL
+```
+ip access-list extended bgp-filter
+ permit ip host 21.22.110.0 host 255.255.255.0
+
+route-map bgp-filter permit 20
+ match ip address bgp-filter
+
+router bgp 500
+  neighbor 10.4.4.4 route-map bgp-filter out
+  neighbor 10.2.2.2 route-map bgp-filter out
+
+```
+
+
+### with prefix list
+```
+ip prefix-list bgp-filter seq 5 permit 21.22.110.0/24
+
+
+route-map bgp-filter permit 20
+ match ip address prefix bgp-filter
+
+router bgp 500
+  neighbor 10.2.2.2 route-map bgp-filter out
+  neighbor 10.4.4.4 route-map bgp-filter out
+
+```
+
+
+
+
+#### with as-path
+```
+ip as-path access-list 100 permit ^$
+
+
+route-map bgp-filter permit 20
+ match as-path 100
+
+router bgp 500
+  neighbor 10.2.2.2 route-map bgp-filter out
+  neighbor 10.4.4.4 route-map bgp-filter out
+
+
+  
+
+  
+
+```
+
 
