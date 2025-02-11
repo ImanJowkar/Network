@@ -227,3 +227,103 @@ router bgp 500
 ```
 
 
+# Clear in BGP
+
+```
+# Hard reset (very Bad)
+clear ip bgp 10.1.1.1
+clear ip bgp *
+
+
+
+# soft reset (good)
+clear ip bgp 10.1.1.1 soft out
+clear ip bgp 10.1.1.1  out
+clear ip bgp * out
+
+clear ip bgp 10.1.1.1 soft in
+clear ip bgp 10.1.1.1 in
+clear ip bgp * in
+
+
+
+```
+
+# path selection
+
+## Weight
+
+```
+! bigger weight is better
+
+! solution-1
+router bgp 64503
+ address-family ipv4 unicast
+  neighbor 10.4.4.4 weight 1000
+  neighbor 10.2.2.2 weight 500
+
+
+do clear ip bgp * in
+
+
+! solution-2
+
+ip prefix-list mypref seq 10 permit 8.8.8.0/24
+route-map ISP-4 permit 10 
+ match ip address prefix-list mypref
+ set weight 400
+
+route-map ISP-4 permit 20
+
+
+
+ip prefix-list mypref1 seq 10 permit 9.9.9.0/24
+route-map ISP-2 permit 10 
+ match ip address prefix-list mypref1
+ set weight 500
+
+route-map ISP-2 permit 20
+
+
+router bgp 64503
+ address-family ipv4 unicast
+  neighbor 10.4.4.4 route-map ISP-4 in
+  neighbor 10.2.2.2 route-map ISP-2 in
+
+
+do clear ip bgp * in
+
+
+! sloution-3
+
+ip prefix-list half-1 seq 10 permit 0.0.0.0/1 le 32
+
+route-map ISP-2 permit 10
+ match ip address prefix-list ISP-2
+ set weight 500
+
+route-map ISP-2 permit 20
+
+ip prefix-list half-2 seq 10 permit 128.0.0.0/1 le 32
+route-map ISP-4 permit 10
+ match ip address prefix-list half-2
+ set weight 500
+
+route-map ISP-4 permit 20
+
+
+router bgp 64503
+ address-family ipv4 unicast
+  neighbor 10.4.4.4 route-map ISP-4 in
+  neighbor 10.2.2.2 route-map ISP-2 in
+
+do clear ip bgp * in
+
+```
+
+## Local-pref
+
+```
+
+
+```
